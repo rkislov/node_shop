@@ -4,10 +4,18 @@ const router = Router()
 
 router.get('/', async (req,res)=>{
     const courses = await Course.find()
+    .populate('userId', 'email name')
     res.render('courses', {
         title: 'Курсы',
         isCourses: true,
         courses
+    })
+})
+
+router.get('/add',(req,res)=>{
+    res.render('add', {
+        title: 'Добавление курса',
+        isCourses: true,
     })
 })
 
@@ -45,7 +53,8 @@ router.post('/',async (req, res)=> {
     const course = new Course({
         title: req.body.title,
         price: req.body.price,
-        img: req.body.img
+        img: req.body.img,
+        userId: req.user.id
     })
     try {
         await course.save()
