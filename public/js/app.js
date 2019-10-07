@@ -1,5 +1,5 @@
 const toCurrency = price => {
-    new Intl.NumberFormat('ru-RU', {
+    return new Intl.NumberFormat('ru-RU', {
         currency: 'rub',
         style: 'currency'
     }).format(price)
@@ -20,8 +20,8 @@ if ($card) {
                 method: 'delete'
             }).then(res => res.json())
             .then(card => {
-                if (card.corses.length) {
-                    const html = card.corses.map(c => {
+                if (card.courses.length) {
+                    const html = card.courses.map(c => {
                         return `
                         <tr>
                         <td>${c.title}</td>
