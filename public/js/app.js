@@ -32,7 +32,7 @@ if ($card) {
                     </tr>
                         `
                     }).join('')
-                    $card.querySelector('tbody'),innerHTML = html
+                    $card.querySelector('tbody').innerHTML = html
                     $card.querySelector('.price').textContent = toCurrency(card.price)
                 } else {
                     $card.innerHTML='<p>Корзина пуста</p>'

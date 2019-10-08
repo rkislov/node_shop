@@ -36,10 +36,6 @@ app.use('/courses',coursesRoutes)
 app.use('/card',cardRoutes)
 
 
-
-
-
-
 const PORT = process.env.PORT || 3000
 
 async function start () {
