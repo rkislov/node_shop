@@ -60,9 +60,5 @@ if ($card) {
 
 var instance = M.Tabs.init(document.querySelectorAll('.tabs'));
 
-// Or with jQuery
 
-$(document).ready(function(){
-  $('.tabs').tabs();
-});
       
