@@ -32,9 +32,14 @@
       <h1>Создать аккаунт</h1> 
     <form action="/auth/register" method="POST">
         <div class="input-field">
-            <input name="reemail" id="email" type="email" class="validate" required>
-            <label for="reemail">Email</label>
+            <input name="remail" id="email" type="email" class="validate" required>
+            <label for="remail">Email</label>
             <span class="helper-text" data-error="Введите email"></span>
+        </div>
+        <div class="input-field">
+            <input name="name" id="name" type="text" class="validate" required>
+            <label for="name">Имя</label>
+            <span class="helper-text" data-error="Введите ваше имя"></span>
         </div>
 
         <div class="input-field">
@@ -43,8 +48,8 @@
             <span class="helper-text" data-error="Введите пароль"></span>
         </div>
          <div class="input-field">
-            <input name="confirm" id="confirm" type="password" class="validate" required>
-            <label for="confirm">Пароль еще раз</label>
+            <input name="repeat" id="repeat" type="password" class="validate" required>
+            <label for="repeat">Пароль еще раз</label>
             <span class="helper-text" data-error="Введите пароль"></span>
         </div>
 
