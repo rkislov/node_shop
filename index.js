@@ -1,6 +1,7 @@
 const express = require('express')
 const path = require('path')
 const exphbs = require('express-handlebars')
+const csrf = require('csurf')
 const mongoose = require('mongoose')
 const session = require('express-session')
 const MongoStore = require('connect-mongodb-session')(session)
@@ -26,6 +27,7 @@ const hbs = exphbs.create({
     extname: 'hbs'
 })
 
+
 app.engine('hbs', hbs.engine)
 app.set('view engine', 'hbs')
 app.set('views', 'views')
@@ -42,6 +44,7 @@ app.use(session({
     store
 }))
 
+app.use(csrf())
 app.use(varMiddleware)
 app.use(userMiddleweare)
 
