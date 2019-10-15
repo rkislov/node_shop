@@ -1,12 +1,22 @@
 const {Router} = require('express')
 const bcrypt = require('bcryptjs')
+const nodemailer = require('nodemailer')
+const keys = require('../keys')
+const regEmail = require('../emails/registration')
+const sendgrid = require('nodemailer-sendgrid-transport')
 const User = require('../models/user')
 const router = Router()
+
+const transporter = nodemailer.createTransport(sendgrid({
+    auth: {api_key: keys.SENDGRID_API_KEY }
+}))
 
 router.get('/login', async (req,res)=> {
     res.render('auth/login',{
         title: "Авторизация",
-        isLogin: true
+        isLogin: true,
+        loginError: req.flash('loginError'),
+        registerError: req.flash('registerError')
     })
 })
 
@@ -32,9 +42,11 @@ router.post('/login', async (req,res) => {
                     }
                 })
             } else {
+                req.flash('loginError', 'Не верный пароль')
                 res.redirect('/auth/login#login')
             }
         } else {
+            req.flash('loginError', 'Такого пользователя нет')
             res.redirect('/auth/login#login')
         }
 
@@ -59,8 +71,9 @@ router.post('/register', async (req,res)=> {
         //console.log(req.body)
         const password = req.body.rpassword
         const canEmail = req.body.remail
-        const candidate = await User.findOne({canEmail})
+        const candidate = await User.findOne({email: canEmail})
         if(candidate) {
+            req.flash('registerError', 'Пользователь с таким email уже существует')
             res.redirect('/auth/login#register')
         } else {
             const hashPassword = await bcrypt.hash(password, 10)
@@ -72,6 +85,7 @@ router.post('/register', async (req,res)=> {
             })
             await user.save()
             res.redirect('/auth/login#login')
+            await transporter.sendMail(regEmail(user.email))
         }
 
     } catch (error) {
